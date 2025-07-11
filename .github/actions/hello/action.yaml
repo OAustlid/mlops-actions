@@ -1,40 +1,15 @@
-name: setup-azure
+name: hello
 
 inputs:
-  tenant-id:
-    description: 'Tenant id'
+  name:
+    description: 'name to greet'
     required: true
-  client-id:
-    description: 'Client-id'
-    required: true
-  subscription-id:
-    description: 'Subscription id'
-    required: true
-  python-version:
-    description: 'Python version'
-    required: false
-    default: '3.13'
+    default: 'World'
 
 runs:
   using: "composite"
   steps:
-    - name: Azure Login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ inputs.client-id }}
-        tenant-id: ${{ inputs.tenant-id }}
-        subscription-id: ${{ inputs.subscription-id }}
-        enable-AzPSSession: true
-        auth-type: SERVICE_PRINCIPAL
+    - name: Hi
+      run: |
+        echo "Hello! ${{ inputs.name }}"
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ inputs.python-version }}
-
-#    - name: Install stuff
-#      shell: bash
-#      run: |
-#        pip install uv
-#        uv sync
-#        az extension add -n ml -y

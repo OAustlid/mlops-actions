@@ -1,0 +1,14 @@
+name: hello
+description: Hello
+inputs:
+  name:
+    description: 'name to greet'
+    default: 'World!'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Hi
+      shell: bash
+      run: |
+        echo "Hello ${{ inputs.name }}"

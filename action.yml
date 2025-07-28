@@ -2,12 +2,16 @@ name: hello-from-action
 description: "Hello World action (published)"
 
 inputs:
-  custom-text:
-    description: "Some text"
+  asset-type:
+    description: "some_type"
     required: true
+  asset-path:
+    description: "some/path"
+    required: True
 
 runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ inputs.custom-text }}
+    - ${{ inputs.asset-type }}
+    - ${{ inputs.asset-path }}

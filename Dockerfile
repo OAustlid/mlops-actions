@@ -10,19 +10,22 @@ WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1
 
 # Copy dependency files (e.g., pyproject.toml, uv.lock) into the container
-COPY pyproject.toml uv.lock ./
+#COPY pyproject.toml uv.lock ./
+COPY pyproject.toml uv.lock app.py ./
 
 # Install dependencies without installing the project itself
-RUN --mount=type=cache,target=/root/.cache/uv \
-uv sync --locked --no-install-project
+#RUN --mount=type=cache,target=/root/.cache/uv \
+#uv sync --locked --no-install-project
 #RUN uv sync
 
 # Copy the rest of the application code
-COPY app.py .
+#COPY app.py .
 
 # Install the project in non-editable mode
-RUN --mount=type=cache,target=/root/.cache/uv \
-uv sync --locked --no-editable
+#RUN --mount=type=cache,target=/root/.cache/uv \
+#uv sync --locked --no-editable
+
+RUN uv sync
 
 # Add the virtual environment to PATH
 ENV PATH="/app/.venv/bin:$PATH"
@@ -31,6 +34,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000
 
 # Command to run the application
+#CMD ["uv", "run", "python", "app.py"]
 ENTRYPOINT ["uv", "run", "python", "app.py"]
 CMD ["--help"]
 #CMD ["uv", "run", "python", "app.py"]

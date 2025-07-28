@@ -1,5 +1,5 @@
-name: hello-from-action
-description: "Hello World action (published)"
+name: action-using-docker
+description: "deploy action"
 
 inputs:
   asset-type:

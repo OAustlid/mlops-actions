@@ -26,13 +26,9 @@ runs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.13'
-    - name: Install Dependencies
-      shell: bash
-      run: |
-        python -m pip install --upgrade uv
-        uv sync
-    - name: Deploy
+    - name: Run stuff
       shell: bash
       run: |
         echo ${{ inputs.tenant-id }} ${{ inputs.subscription-id }} ${{ inputs.resourcegroup-name }} ${{ inputs.workspace-name }} ${{ inputs.asset-type }} ${{ inputs.asset-path }}
-        uv run python deploy-asset/deploy.py ${{ inputs.asset-type }} ${{ inputs.asset-path}}
+        python -m pip install --upgrade typer azure-identity azure-ai-ml
+        python deploy-asset/deploy.py ${{ inputs.asset-type }} ${{ inputs.asset-path}}

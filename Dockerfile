@@ -6,7 +6,7 @@ ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
 ENV GITHUB_SHA=${GITHUB_SHA}
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chown -RX /entrypoint.sh
+RUN chmod a+rx /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 #ENTRYPOINT ["tail", "-f", "/dev/null"]

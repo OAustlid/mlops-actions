@@ -1,0 +1,38 @@
+name: deploy-asset
+description: deploy AzureML asset
+inputs:
+  tenant-id:
+    description: 'tenant'
+    required: true
+  subscription-id:
+    description: 'subscription_id'
+    required: true
+  resourcegroup-name:
+    description: 'resourcegroup name'
+    required: true
+  workspace-name:
+    description: 'workspace name'
+    required: true
+  asset-path:
+    description: 'asset path. Assumed to be only a single path to a asset.yml or asset.yaml'
+    required: true
+  asset-type:
+    description: 'type [basemodel, component, data, environment, job, pipeline]'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.13'
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        python -m pip install --upgrade uv
+        uv sync
+    - name: Deploy
+      shell: bash
+      run: |
+        echo ${{ inputs.tenant-id }} ${{ inputs.subscription-id }} ${{ inputs.resourcegroup-name }} ${{ inputs.workspace-name }} ${{ inputs.asset-type }} ${{ inputs.asset-path }}
+        uv run python deploy-asset/deploy.py ${{ inputs.asset-type }} ${{ inputs.asset-path}}

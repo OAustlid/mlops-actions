@@ -35,6 +35,6 @@ EXPOSE 8000
 
 # Command to run the application
 #CMD ["uv", "run", "python", "app.py"]
-ENTRYPOINT ["uv", "run", "python", "app.py"]
+ENTRYPOINT ["uv", "run", "python", "/app/app.py"]
 CMD ["--help"]
 #CMD ["uv", "run", "python", "app.py"]

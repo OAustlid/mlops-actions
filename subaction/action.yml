@@ -1,0 +1,17 @@
+name: action-using-docker
+description: "deploy action"
+
+inputs:
+  asset-type:
+    description: "some_type"
+    required: true
+  asset-path:
+    description: "some/path"
+    required: True
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.asset-type }}
+    - ${{ inputs.asset-path }}

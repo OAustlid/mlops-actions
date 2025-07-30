@@ -1,0 +1,68 @@
+name: Register Component
+description: Registers a Component
+inputs:
+  tenant-id:
+    description: 'Tenant id'
+    required: true
+  subscription-id:
+    description: 'Azure subscription id'
+    required: true
+  resource-group:
+    description: 'Azure resource group'
+    required: true
+  workspace-name:
+    description: 'Azure Machine Learning workspace name'
+    required: true
+  component-name:
+    description: 'Component name'
+    required: true
+  component-path:
+    description: 'Component-path'
+    required: true
+  component-version:
+    description: 'Component version'
+    required: false
+  registry-name:
+    description: 'AzureML Registry name'
+    required: false
+  tags:
+    description: 'List of tags'
+    required: false
+  python-version:
+    description: 'Python version'
+    required: false
+    default: '3.13'
+outputs:
+  component-id:
+    description: 'resource id of the component'
+    value: "from below"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      uses: ./.github/actions/setup
+      with:
+        tenant-id: ${{ inputs.tenant-id }}
+        subscription-id: ${{ inputs.subscription-id }}
+        client-id: ${{ inputs.client-id }}
+        python-version: ${{ inputs.python-version }}
+    - name: Register Component
+      shell: bash
+      id: register_component
+      run: |
+        echo "component-id=$(\
+        az ml component create --query id \
+        --file ${{ inputs.component-path }}/component.yml \
+        -n ${{ inputs.component-name }} \
+        -g ${{ inputs.resource-group }} \
+        -w ${{ inputs.workspace-name }} \
+        --subscription ${{ inputs.subscription-id }} \
+        --query "join(':',['azureml',name,version])" \
+        --output tsv \
+        )" \
+        >> "$GITHUB_OUTPUT"
+    - name: Get Result
+      shell: bash
+      run: |
+        echo "Reference to AzureML Component: ${{ steps.register_component.outputs.component-id }}"

@@ -13,6 +13,9 @@ inputs:
   workspace-name:
     description: 'Azure Machine Learning workspace name'
     required: true
+  client-id:
+    description: 'Client id configured with Federated Credentials'
+    required: true
   component-name:
     description: 'Component name'
     required: true
@@ -22,16 +25,7 @@ inputs:
   component-version:
     description: 'Component version'
     required: false
-  registry-name:
-    description: 'AzureML Registry name'
-    required: false
-  tags:
-    description: 'List of tags'
-    required: false
-  python-version:
-    description: 'Python version'
-    required: false
-    default: '3.13'
+
 outputs:
   component-id:
     description: 'resource id of the component'
@@ -40,17 +34,20 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup
-      uses: ./.github/actions/setup
+    - name: Azure Login
+      uses: azure/login@v2
       with:
+        client-id: ${{ inputs.client-id }}
         tenant-id: ${{ inputs.tenant-id }}
         subscription-id: ${{ inputs.subscription-id }}
-        client-id: ${{ inputs.client-id }}
-        python-version: ${{ inputs.python-version }}
+        enable-AzPSSession: true
+        auth-type: SERVICE_PRINCIPAL
+
     - name: Register Component
       shell: bash
       id: register_component
       run: |
+        az extension add -n ml -y
         echo "component-id=$(\
         az ml component create --query id \
         --file ${{ inputs.component-path }}/component.yml \

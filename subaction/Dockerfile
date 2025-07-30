@@ -4,7 +4,7 @@
 FROM astral/uv:python3.12-bookworm-slim
 WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1
-COPY pyproject.toml uv.lock subapp.py ./
+COPY ../pyproject.toml ../uv.lock subapp.py ./
 RUN uv sync
 ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000

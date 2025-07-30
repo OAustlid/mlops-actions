@@ -2,16 +2,21 @@ name: action-using-docker
 description: "deploy action"
 
 inputs:
-  asset-type:
-    description: "some_type"
+  subscription-id:
+    description: "subscription-id"
     required: true
-  asset-path:
-    description: "some/path"
-    required: True
+  resourcegroup-name:
+    description: "resourcegroup-name"
+    required: true
+  workspace-name:
+    description: "workspace-name"
+    required: true
 
 runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ inputs.asset-type }}
-    - ${{ inputs.asset-path }}
+    - getenvlist
+    - ${{ inputs.subscription-id }}
+    - ${{ inputs.resourcegroup-name }}
+    - ${{ inputs.workspace-name }}

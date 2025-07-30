@@ -5,9 +5,28 @@ from azure.ai.ml import MLClient
 app = typer.Typer()
 
 @app.command()
-def deploy(asset_type:str,asset_path:str):
-    print(f"subaction: {asset_type} {asset_path}")
+def help():
+    print(f"""
+    Provide a subscription_id, a resource group name and a workspace_name.
+    Then this app will print out the environments it finds beneath it.
+    """)
 
+@app.command()
+def getenvlist(subscription_id:str,resource_group_name:str,workspace_name:str):
+    print(f"Environments in /SUBSCRIPTIONS/{subscription_id}/RESOURCEGROUPS/{resource_group_name}/PROVIDERS/Microsoft.MachineLearningServices/WORKSPACES/{workspace_name} :")
+    credentials = ChainedTokenCredential(
+        AzureCliCredential(process_timeout=10),
+        DefaultAzureCredential()
+    )
+    client = MLClient(
+        credential=credentials,
+        subscription_id=subscription_id,
+        resource_group_name=resource_group_name,
+        workspace_name=workspace_name
+    )
+    e_list = list(client.environments.list())
+    for e in e_list:
+        print(f"Environment: {e.name}, {e.latest_version}")
 
 if __name__ == "__main__":
     app()

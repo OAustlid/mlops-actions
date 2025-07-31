@@ -2,6 +2,9 @@ name: action-using-docker
 description: "deploy action"
 
 inputs:
+  token:
+    description: "token from login"
+    required: true
   subscription-id:
     description: "subscription-id"
     required: true
@@ -16,7 +19,9 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - getenvlist
-    - ${{ inputs.subscription-id }}
-    - ${{ inputs.resourcegroup-name }}
-    - ${{ inputs.workspace-name }}
+     - listenvvars
+#    - getenvlist
+#    - ${{ inputs.token }}
+#    - ${{ inputs.subscription-id }}
+#    - ${{ inputs.resourcegroup-name }}
+#    - ${{ inputs.workspace-name }}

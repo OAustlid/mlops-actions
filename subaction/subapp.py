@@ -13,17 +13,17 @@ def help():
     """)
 
 @app.command()
-def getenvlist(subscription_id:str,resource_group_name:str,workspace_name:str,token:str|None=""):
+def getenvlist(token:str,subscription_id:str,resource_group_name:str,workspace_name:str):
     print(f"Environments in /SUBSCRIPTIONS/{subscription_id}/RESOURCEGROUPS/{resource_group_name}/PROVIDERS/Microsoft.MachineLearningServices/WORKSPACES/{workspace_name} :")
     #access_token = os.environ.get("AZURE_ACCESS_TOKEN")
 
-    if (token is None) or (token ==""):
-        credential = ChainedTokenCredential(
-            AzureCliCredential(process_timeout=10),
-            DefaultAzureCredential(process_timeout=10)
-        )
-    else:
-        credential = DefaultAzureCredential(managed_identity_client_id=token)
+    #if (token is None) or (token ==""):
+    #    credential = ChainedTokenCredential(
+    #        AzureCliCredential(process_timeout=10),
+    #        DefaultAzureCredential(process_timeout=10)
+    #    )
+    #else:
+    credential = DefaultAzureCredential(managed_identity_client_id=token)
 
     client = MLClient(
         credential=credential,

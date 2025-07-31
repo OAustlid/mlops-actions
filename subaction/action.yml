@@ -19,9 +19,9 @@ runs:
   using: docker
   image: Dockerfile
   args:
-     - listenvvars
-#    - getenvlist
-#    - ${{ inputs.token }}
-#    - ${{ inputs.subscription-id }}
-#    - ${{ inputs.resourcegroup-name }}
-#    - ${{ inputs.workspace-name }}
+    - getenvlist
+    - ${{ inputs.token }}
+    - ${{ inputs.subscription-id }}
+    - ${{ inputs.resourcegroup-name }}
+    - ${{ inputs.workspace-name }}
+#     - listenvvars

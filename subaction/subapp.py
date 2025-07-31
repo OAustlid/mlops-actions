@@ -15,6 +15,8 @@ def help():
 @app.command()
 def getenvlist(token:str,subscription_id:str,resource_group_name:str,workspace_name:str):
     print(f"Environments in /SUBSCRIPTIONS/{subscription_id}/RESOURCEGROUPS/{resource_group_name}/PROVIDERS/Microsoft.MachineLearningServices/WORKSPACES/{workspace_name} :")
+    print(f"Length of token: {len(token)}")
+    
     #access_token = os.environ.get("AZURE_ACCESS_TOKEN")
 
     #if (token is None) or (token ==""):

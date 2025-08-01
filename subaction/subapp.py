@@ -12,13 +12,14 @@ class Credential:
 
 def get_client(token:str,expires_on:int,subscription_id:str,resource_group_name:str,workspace_name:str)->MLClient:
     credential = Credential(AccessToken(token=token,expires_on=expires_on))
+    print(credential)
     client = MLClient(
         credential=credential,
         subscription_id=subscription_id,
         resource_group_name=resource_group_name,
         workspace_name=workspace_name
     )
-    return MLClient
+    return client
 
 app = typer.Typer()
 

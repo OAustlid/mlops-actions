@@ -28,5 +28,5 @@ jobs:
           context: subaction
           push: true
           tags: |
-            ghcr.io/OAustlid/mlops-actions/subaction:latest
-            ghcr.io/OAustlid/mlops-actions/subaction:${{ github.event.release.tag_name }}
+            ghcr.io/oaustlid/mlops-actions/subaction:latest
+            ghcr.io/oaustlid/mlops-actions/subaction:${{ github.event.release.tag_name }}
